@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perpustakaan Farras</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f4f4f4;
+}
+
+/* HEADER */
+header{
+    background:#2f4f4f;
+    color:white;
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+}
+.logo{
+    display:flex;
+    align-items:center;
+}
+.logo img{
+    width:45px;
+    margin-right:10px;
+}
+nav ul{
+    list-style:none;
+    display:flex;
+    padding:0;
+    margin:0;
+}
+nav ul li{
+    margin-left:20px;
+}
+nav ul li a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+/* MAIN */
+main{min-height:75vh}
+section{
+    display:none;
+    padding:40px 20px;
+    animation:fade .5s ease;
+}
+section.active{display:block}
+
+@keyframes fade{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+h1,h2{color:#2f4f4f}
+
+/* HERO */
+.hero{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+.hero img{
+    width:100%;
+    max-width:500px;
+    border-radius:12px;
+}
+.hero-text p{
+    line-height:1.8;
+    text-align:justify;
+}
+
+/* LOGIN */
+#beranda{
+    background:linear-gradient(135deg,#e0f2f1,#f1f8e9);
+}
+.login-box{
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    max-width:380px;
+    margin-top:30px;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    text-align:center;
+}
+.login-icon{
+    font-size:60px;
+}
+.login-box input,button{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+}
+
+/* PRODUK */
+#produk{
+    background:#eef7f6;
+}
+.produk-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+}
+.produk{
+    background:white;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+    overflow:hidden;
+    cursor:pointer;
+    transition:.3s;
+}
+.produk:hover{
+    transform:translateY(-5px);
+}
+.produk img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+.produk h3{
+    margin:10px;
+}
+.produk p{
+    margin:0 10px 15px;
+}
+
+/* TRANSAKSI */
+#transaksi{
+    background:linear-gradient(to right,#e8f5e9,#f1f8e9);
+}
+form{
+    max-width:400px;
+}
+label{display:block;margin-top:10px}
+input,select,button{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+}
+button{
+    background:#2f4f4f;
+    color:white;
+    border:none;
+    cursor:pointer;
+}
+.error{color:red;margin-top:10px}
+
+/* SUKSES */
+#sukses{
+    background:linear-gradient(135deg,#e0f7fa,#e8f5e9);
+    text-align:center;
+}
+.sukses-box{
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    max-width:500px;
+    margin:auto;
+    box-shadow:0 10px 30px rgba(0,0,0,.15);
+}
+.sukses-box h1{
+    font-size:50px;
+}
+
+/* FOOTER */
+footer{
+    background:#2f4f4f;
+    color:white;
+    text-align:center;
+    padding:12px;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    nav ul{
+        flex-direction:column;
+        width:100%;
+    }
+    nav ul li{
+        margin:10px 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        <img src="https://cdn-icons-png.flaticon.com/512/29/29302.png">
+        <h2>Perpustakaan Farras</h2>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="#" onclick="showPage('beranda')">Beranda</a></li>
+            <li><a href="#" onclick="showPage('produk')">Produk Buku</a></li>
+            <li><a href="#" onclick="showPage('transaksi')">Transaksi</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+
+<!-- BERANDA -->
+<section id="beranda" class="active">
+    <h1>Selamat Datang di Perpustakaan Farras</h1>
+
+    <div class="hero">
+        <div class="hero-text">
+            <p>
+                Perpustakaan Farras adalah layanan perpustakaan modern yang menyediakan
+                berbagai koleksi buku untuk menunjang literasi, pendidikan, dan hiburan.
+            </p>
+        </div>
+        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f">
+    </div>
+
+    <div class="login-box">
+        <div class="login-icon">👤</div>
+        <input type="text" placeholder="Username">
+        <input type="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+    </div>
+</section>
+
+<!-- PRODUK -->
+<section id="produk">
+    <h1>Pilih Buku</h1>
+
+    <div class="produk-grid">
+        <div class="produk" onclick="pilihBuku('Novel Fantasi')">
+            <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794">
+            <h3>Novel Fantasi</h3>
+            <p>Cerita penuh imajinasi dan petualangan.</p>
+        </div>
+
+        <div class="produk" onclick="pilihBuku('Buku Pelajaran')">
+            <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353">
+            <h3>Buku Pelajaran</h3>
+            <p>Penunjang belajar dan pendidikan.</p>
+        </div>
+
+        <div class="produk" onclick="pilihBuku('Majalah')">
+            <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66">
+            <h3>Majalah</h3>
+            <p>Informasi dan hiburan terkini.</p>
+        </div>
+    </div>
+</section>
+
+<!-- TRANSAKSI -->
+<section id="transaksi">
+    <h1>Form Transaksi</h1>
+
+    <form onsubmit="return simpanTransaksi()">
+        <label>Nama Buku</label>
+        <input type="text" id="namaTransaksi" readonly>
+
+        <label>Jumlah</label>
+        <input type="number" id="jumlah">
+
+        <label>Kategori</label>
+        <select id="kategori">
+            <option value="">-- Pilih --</option>
+            <option>Novel</option>
+            <option>Buku Pelajaran</option>
+            <option>Majalah</option>
+        </select>
+
+        <button type="submit">Simpan Transaksi</button>
+        <p class="error" id="pesanError"></p>
+    </form>
+</section>
+
+<!-- SUKSES -->
+<section id="sukses">
+    <div class="sukses-box">
+        <h1>✅</h1>
+        <h2>Transaksi Berhasil</h2>
+        <p>
+            Transaksi telah berhasil dan buku boleh diambil
+            di <b>receptionist</b>.
+        </p>
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <p>&copy; 2026 Perpustakaan Farras</p>
+</footer>
+
+<script>
+function showPage(id){
+    document.querySelectorAll("main section").forEach(s=>s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+}
+
+function login(){
+    showPage('produk');
+}
+
+function pilihBuku(nama){
+    document.getElementById("namaTransaksi").value = nama;
+    showPage('transaksi');
+}
+
+function simpanTransaksi(){
+    const j=jumlah.value;
+    const k=kategori.value;
+    if(!j||!k){
+        pesanError.innerText="Semua field harus diisi!";
+        return false;
+    }
+    pesanError.innerText="";
+    showPage('sukses');
+    return false;
+}
+</script>
+
+</body>
+</html>

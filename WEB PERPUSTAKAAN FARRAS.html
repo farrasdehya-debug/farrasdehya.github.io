@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perpustakaan Farras</title>
+    <style>
+        /* --- CSS Variables --- */
+        :root {
+            --primary-color: #4A3B32; /* Coklat tua */
+            --secondary-color: #D4B483; /* Emas/Krem */
+            --accent-color: #C44536; /* Merah Bata */
+            --text-color: #333;
+            --white: #fff;
+            --overlay-bg: rgba(255, 255, 255, 0.92); /* Background konten semi-transparan */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* --- Global Background (Semua Halaman) --- */
+        body {
+            /* Gambar Background Perpustakaan HD dengan overlay gelap agar tulisan header terbaca */
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1507842217121-9e93c8aaf27c?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Gambar tetap diam saat discroll */
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- Header & Navigasi (CENTERED) --- */
+        header {
+            background-color: transparent; /* Transparan agar menyatu dengan background body */
+            color: var(--white);
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column; /* Menyusun Logo dan Menu secara vertikal */
+            align-items: center; /* Rata tengah horizontal */
+            justify-content: center;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Logo Gambar Buku */
+        .logo-img {
+            width: 80px;
+            height: auto;
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+        }
+
+        header h2 {
+            font-size: 2rem;
+            color: var(--secondary-color);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            margin: 0;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px; /* Jarak antar menu lebih lebar */
+            padding: 0;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+
+        /* --- Layout Utama --- */
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 20px auto;
+            width: 90%;
+            text-align: center;
+            /* Memberikan kotak konten background putih transparan agar teks terbaca di atas gambar */
+            background-color: var(--overlay-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        section {
+            display: none;
+            animation: fadeIn 0.6s;
+        }
+
+        section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 2rem;
+            border-bottom: 2px solid var(--secondary-color);
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+
+        /* --- Form Styling --- */
+        .form-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: 0 auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--accent-color);
+        }
+
+        /* --- Grid Buku --- */
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 25px;
+            justify-items: center;
+        }
+
+        .book-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 100%;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .book-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* --- Tabel --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden; /* Untuk border radius di tabel */
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: auto;
+        }
+
+        /* --- Responsivitas --- */
+        @media (max-width: 600px) {
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            header h2 {
+                font-size: 1.5rem;
+            }
+
+            main {
+                width: 95%;
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="https://cdn-icons-png.flaticon.com/512/3330/3330314.png" alt="Logo Buku" class="logo-img">
+            <h2>Perpustakaan Farras</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showPage('beranda-section')">Beranda</a></li>
+                <li><a href="#" onclick="showPage('transaksi-section')">Transaksi</a></li>
+                <li><a href="#" onclick="showPage('profil-section')">Profil</a></li>
+                <li><a href="#" onclick="showPage('login-section')">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="login-section" class="active">
+            <h1>Login Anggota</h1>
+            <p style="margin-bottom: 20px;">Silahkan masuk untuk mengakses koleksi perpustakaan.</p>
+            <div class="form-box">
+                <form onsubmit="handleLogin(event)">
+                    <input type="text" id="username" placeholder="Username" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <button type="submit">Masuk Aplikasi</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="beranda-section">
+            <h1>Selamat Datang di Perpustakaan Farras</h1>
+            <p><strong>"Membaca adalah jendela dunia."</strong></p>
+            
+            <div style="margin: 30px 0; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                <div style="max-width: 300px; text-align: left; background: #fff; padding: 20px; border-radius: 8px;">
+                    <h3 style="color: var(--accent-color);">📚 Koleksi Lengkap</h3>
+                    <p>Dari novel hingga jurnal ilmiah tersedia lengkap.</p>
+                </div>
+                <div style="max-width: 300px; text-align: left; background: #fff; padding: 20px; border-radius: 8px;">
+                    <h3 style="color: var(--accent-color);">💻 Fasilitas Digital</h3>
+                    <p>Lab komputer dan E-Book siap menunjang produktivitas.</p>
+                </div>
+            </div>
+
+            <hr style="margin: 30px 0; border: 0; border-top: 1px solid #ccc;">
+
+            <h3>Langkah Peminjaman:</h3>
+            <ol style="display: inline-block; text-align: left; margin: 10px 0;">
+                <li>Login akun anggota.</li>
+                <li>Pilih buku di menu Transaksi atau Lihat Produk.</li>
+                <li>Isi form peminjaman.</li>
+                <li>Ambil buku di resepsionis.</li>
+            </ol>
+            <br><br>
+            <button onclick="showPage('produk-section')">Lihat Katalog Buku</button>
+        </section>
+
+        <section id="produk-section">
+            <h1>Katalog Buku & Fasilitas</h1>
+            <p>Jelajahi koleksi kami</p>
+            <br>
+            <div class="book-grid">
+                <div class="book-card"><span class="book-icon">📖</span><b>Novel</b><br><small>Fiksi & Sastra</small></div>
+                <div class="book-card"><span class="book-icon">📚</span><b>Pelajaran</b><br><small>SD, SMP, SMA</small></div>
+                <div class="book-card"><span class="book-icon">📰</span><b>Majalah</b><br><small>Berita & Gaya Hidup</small></div>
+                <div class="book-card"><span class="book-icon">🏛️</span><b>Sejarah</b><br><small>Nusantara & Dunia</small></div>
+                <div class="book-card"><span class="book-icon">🧠</span><b>Psikologi</b><br><small>Pengembangan Diri</small></div>
+                <div class="book-card"><span class="book-icon">🔬</span><b>Karya Ilmiah</b><br><small>Skripsi & Jurnal</small></div>
+                <div class="book-card"><span class="book-icon">📕</span><b>Kamus</b><br><small>Bahasa Asing</small></div>
+                <div class="book-card"><span class="book-icon">🌍</span><b>Ensiklopedia</b><br><small>Pengetahuan Umum</small></div>
+                <div class="book-card"><span class="book-icon">💻</span><b>E-Book</b><br><small>Koleksi Digital</small></div>
+                <div class="book-card"><span class="book-icon">👤</span><b>Biografi</b><br><small>Tokoh Inspiratif</small></div>
+            </div>
+            <br>
+            <h3>Fasilitas Lain</h3>
+            <button onclick="showPage('lab-section')" style="background-color: var(--secondary-color); color: var(--primary-color);">Daftar Lab Komputer</button>
+        </section>
+
+        <section id="transaksi-section">
+            <h1>Form Peminjaman Buku</h1>
+            <div class="form-box">
+                <form id="transaksiForm" onsubmit="handleTransaksi(event)">
+                    <input type="text" id="peminjam" placeholder="Nama Lengkap Peminjam">
+                    <input type="text" id="buku" placeholder="Judul Buku yang Dipinjam">
+                    <select id="kategori">
+                        <option value="">-- Kategori Buku --</option>
+                        <option value="Novel">Novel</option>
+                        <option value="Pelajaran">Buku Pelajaran</option>
+                        <option value="Sejarah">Sejarah</option>
+                        <option value="Ilmiah">Karya Ilmiah</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                    <input type="number" id="jumlah" placeholder="Jumlah Buku" min="1">
+                    <button type="submit">Simpan Transaksi</button>
+                </form>
+            </div>
+            <br>
+            <p>Ingin melihat riwayat? <a href="#" onclick="showPage('daftar-transaksi-section')" style="color: var(--accent-color);">Lihat Daftar Peminjaman</a></p>
+        </section>
+
+        <section id="daftar-transaksi-section">
+            <h1>Daftar Transaksi</h1>
+            <div style="overflow-x: auto;">
+                <table id="tabelTransaksi">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>Judul Buku</th>
+                            <th>Kategori</th>
+                            <th>Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Farras (Admin)</td>
+                            <td>Cara Belajar Coding</td>
+                            <td>Pelajaran</td>
+                            <td>1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <button onclick="showPage('transaksi-section')">Kembali ke Form</button>
+        </section>
+
+        <section id="lab-section">
+            <h1>Laboratorium Komputer</h1>
+            <p>Gunakan fasilitas komputer kami untuk kebutuhan akademis dan pekerjaan.</p>
+            <br>
+            <div class="form-box">
+                <h3>Booking Jadwal Lab</h3>
+                <form onsubmit="handleLab(event)">
+                    <input type="text" id="labNama" placeholder="Nama Pendaftar" required>
+                    <label style="display:block; text-align:left; font-size:0.9rem; color:#666;">Tanggal Pemakaian:</label>
+                    <input type="date" id="labTanggal" required>
+                    <select id="labDurasi" required>
+                        <option value="">-- Pilih Durasi --</option>
+                        <option value="1 Jam">1 Jam</option>
+                        <option value="2 Jam">2 Jam</option>
+                        <option value="3 Jam">3 Jam (Maksimal)</option>
+                    </select>
+                    <button type="submit">Booking Sekarang</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="profil-section">
+            <h1>Profil Perpustakaan</h1>
+            <div style="background: white; padding: 2rem; border-radius: 8px;">
+                <img src="https://cdn-icons-png.flaticon.com/512/3330/3330314.png" width="100" style="margin-bottom: 15px;">
+                <h2 style="color: var(--primary-color);">Perpustakaan Farras</h2>
+                <p>
+                    Didirikan dengan visi untuk mencerdaskan kehidupan bangsa melalui akses literasi yang mudah dan nyaman.
+                    Perpustakaan Farras menggabungkan kenyamanan membaca konvensional dengan kemudahan teknologi digital.
+                </p>
+                <div style="margin-top: 20px; display: flex; justify-content: center; gap: 20px;">
+                    <div>
+                        <h3>📍 Lokasi</h3>
+                        <p>Jl. Pendidikan No. 1</p>
+                    </div>
+                    <div>
+                        <h3>⏰ Jam Buka</h3>
+                        <p>Senin - Sabtu: 08.00 - 16.00</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Perpustakaan Farras. Solusi Literasi Digital.</p>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            const target = document.getElementById(pageId);
+            if(target) target.classList.add('active');
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            if(user && pass) {
+                alert(`Selamat Datang, ${user}! Akses diberikan.`);
+                showPage('beranda-section');
+            } else {
+                alert("Username/Password kosong.");
+            }
+        }
+
+        function handleTransaksi(e) {
+            e.preventDefault();
+            const nama = document.getElementById('peminjam').value;
+            const buku = document.getElementById('buku').value;
+            const kategori = document.getElementById('kategori').value;
+            const jumlah = document.getElementById('jumlah').value;
+
+            if (nama === "" || buku === "" || kategori === "" || jumlah === "") {
+                alert("Mohon lengkapi data peminjaman!");
+                return;
+            }
+
+            const tableBody = document.querySelector('#tabelTransaksi tbody');
+            const newRow = tableBody.insertRow();
+            newRow.innerHTML = `<td>${nama}</td><td>${buku}</td><td>${kategori}</td><td>${jumlah}</td>`;
+            
+            document.getElementById('transaksiForm').reset();
+            alert("Peminjaman buku telah berhasil, silahkan datangi receptionist untuk mengambil buku anda.");
+            showPage('daftar-transaksi-section');
+        }
+
+        function handleLab(e) {
+            e.preventDefault();
+            const nama = document.getElementById('labNama').value;
+            alert(`Booking Lab berhasil untuk ${nama}. Silahkan datang tepat waktu.`);
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
